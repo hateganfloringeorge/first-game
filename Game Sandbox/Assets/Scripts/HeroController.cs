@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HeroController : MonoBehaviour
 {
@@ -13,12 +12,24 @@ public class HeroController : MonoBehaviour
     private bool facingRight = true;
 
     private bool isGrounded;
+    public bool wasGrounded;
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask whatIsGround;
 
     private int extraJumps;
     public int extraJumpsValue;
+
+    [Header("Events")]
+    [Space]
+
+    public UnityEvent OnLandEvent;
+
+    private void Awake()
+    {
+        if (OnLandEvent == null)
+            OnLandEvent = new UnityEvent();
+    }
 
     private void Start()
     {
@@ -28,7 +39,13 @@ public class HeroController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        bool wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+
+        if (!wasGrounded && isGrounded)
+        {
+            OnLandEvent.Invoke();
+        }
 
         moveInput = Input.GetAxis("Horizontal");
         Debug.Log(moveInput);
