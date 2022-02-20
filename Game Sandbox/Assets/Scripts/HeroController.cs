@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class HeroController : MonoBehaviour
 {
@@ -20,9 +19,6 @@ public class HeroController : MonoBehaviour
 
     private int extraJumps;
     public int extraJumpsValue;
-
-    private const string pauseMenuScene = "PauseMenu";
-
 
     [Header("Events")]
     [Space]
@@ -93,19 +89,12 @@ public class HeroController : MonoBehaviour
     void Flip()
     {
         facingRight = !facingRight;
-        Vector3 scaler = transform.localScale;
-        scaler.x *= -1;
-        transform.localScale = scaler;
+        transform.Rotate(0f, 180f, 0f);
     }
 
     private void OnGameStateChanged(GameState newGameState)
     {
         enabled = newGameState == GameState.Gameplay;
-        //TODO change if new states are added
         Time.timeScale = newGameState == GameState.Gameplay ? 1f : 0f;
-        if (newGameState == GameState.Paused)
-        {
-            SceneManager.LoadScene(pauseMenuScene);
-        }
     }
 }

@@ -25,5 +25,4 @@ public class MovementScript : MonoBehaviour
     {
         animator.SetBool("IsJumping", false);
     }
-
 }

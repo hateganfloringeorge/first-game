@@ -4,15 +4,31 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     private const string mainMenuSceneName = "MainMenu";
-    private const string gameScene1Name = "Level_1";
-    private const string gameScene2Name = "SampleScene";
-    public bool IsGamePaused = false;
 
+    public static bool IsGamePaused = false;
+
+    private void Awake()
+    {
+        GameStateManager.GetInstance.OnGameStateChanged += OnGameStateChanged;
+
+        OnGameStateChanged(GameStateManager.GetInstance.CurrentGameState);
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.GetInstance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState newGameState)
+    {
+        gameObject.SetActive(newGameState == GameState.Paused);
+    }
+
+    //TODO Update when they are inside the playing game
     public void Resume()
     {
-        Time.timeScale = 1f;
-        IsGamePaused = false;
-        SceneManager.LoadScene(gameScene1Name);
+        Debug.Log("Resume");
+        GameStateManager.GetInstance.SetState(GameState.Gameplay);
     }
 
     public void ChangeToMainMenu()
@@ -24,10 +40,7 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("Change to Second game");
-        GameStateManager.GetInstance.SetState(GameState.Gameplay);
-        Time.timeScale = 1f;
-        Debug.Log(GameStateManager.GetInstance.CurrentGameState);
-        SceneManager.LoadScene(gameScene2Name);
+        Debug.Log("Quit game!");
+        Application.Quit();
     }
 }
