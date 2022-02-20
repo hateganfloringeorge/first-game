@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class CharacterController2D : MonoBehaviour
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+
+	private string pauseMenuScene = "PauseMenu";
 
 	[Header("Events")]
 	[Space]
@@ -39,6 +42,13 @@ public class CharacterController2D : MonoBehaviour
 
 		if (OnCrouchEvent == null)
 			OnCrouchEvent = new BoolEvent();
+
+		GameStateManager.GetInstance.OnGameStateChanged += OnGameStateChanged;
+	}
+
+	private void OnDestroy()
+	{
+		GameStateManager.GetInstance.OnGameStateChanged -= OnGameStateChanged;
 	}
 
 	private void FixedUpdate()
@@ -142,5 +152,18 @@ public class CharacterController2D : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	private void OnGameStateChanged(GameState newGameState)
+	{
+		Debug.Log(newGameState.ToString());
+		enabled = newGameState == GameState.Gameplay;
+		//TODO change if new states are added
+		Time.timeScale = newGameState == GameState.Gameplay ? 1f : 0f;
+		if (newGameState == GameState.Paused)
+		{
+			SceneManager.LoadScene(pauseMenuScene);
+		}
+		Debug.Log(GameStateManager.GetInstance.CurrentGameState);
 	}
 }
