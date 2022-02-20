@@ -3,11 +3,12 @@ using UnityEngine.Events;
 
 public class HeroController : MonoBehaviour
 {
+    public Animator animator;
+    private Rigidbody2D rb;
+
     public float speed;
     public float jumpForce;
     private float moveInput;
-
-    private Rigidbody2D rb;
 
     private bool facingRight = true;
 
@@ -20,16 +21,8 @@ public class HeroController : MonoBehaviour
     private int extraJumps;
     public int extraJumpsValue;
 
-    [Header("Events")]
-    [Space]
-
-    public UnityEvent OnLandEvent;
-
     private void Awake()
     {
-        if (OnLandEvent == null)
-            OnLandEvent = new UnityEvent();
-
         GameStateManager.GetInstance.OnGameStateChanged += OnGameStateChanged;
 
     }
@@ -52,11 +45,18 @@ public class HeroController : MonoBehaviour
 
         if (!wasGrounded && isGrounded)
         {
-            OnLandEvent.Invoke();
+            OnLanding();
         }
 
         moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetBool("IsJumping", true);
+        }
 
         if (facingRight == false && moveInput > 0)
         {
@@ -70,19 +70,28 @@ public class HeroController : MonoBehaviour
 
     private void Update()
     {
-        if (isGrounded == true)
+        if (isGrounded)
         {
             extraJumps = extraJumpsValue;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && extraJumps > 0)
+        if (Input.GetButtonDown("Jump"))
         {
-            rb.velocity = Vector2.up * jumpForce;
-            extraJumps--;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && extraJumps == 0 && isGrounded == true)
-        {
-            rb.velocity = Vector2.up * jumpForce;
+            if (isGrounded)
+            {
+                rb.velocity = Vector2.up * jumpForce;
+                extraJumps--;
+                animator.SetBool("IsJumping", true);
+            }
+            else
+            {
+                if (extraJumps > 0)
+                {
+                    rb.velocity = Vector2.up * (jumpForce / 2f);
+                    extraJumps--;
+                    animator.SetTrigger("DoubleJump");
+                }
+            }
         }
     }
 
@@ -96,5 +105,10 @@ public class HeroController : MonoBehaviour
     {
         enabled = newGameState == GameState.Gameplay;
         Time.timeScale = newGameState == GameState.Gameplay ? 1f : 0f;
+    }
+
+    public void OnLanding()
+    {
+        animator.SetBool("IsJumping", false);
     }
 }
