@@ -6422,14 +6422,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1654543741}
   speed: 11
-  jumpForce: 10
+  jumpForce: 15
   wasGrounded: 0
   groundCheck: {fileID: 1925961114}
   checkRadius: 0.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 16384
-  extraJumpsValue: 1
+  extraJumpsValue: 2
 --- !u!1 &1734229271
 GameObject:
   m_ObjectHideFlags: 0
