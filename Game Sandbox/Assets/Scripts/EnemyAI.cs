@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     int currentWayPoint = 0;
     bool reachedEndOfPath = false;
 
+    ScoreBoard score;
     public Transform EnemyGFX;
 
     Seeker seeker;
@@ -21,6 +22,7 @@ public class EnemyAI : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
 
         InvokeRepeating("UpdatePath", 0f, .5f);
     }
@@ -75,5 +77,15 @@ public class EnemyAI : MonoBehaviour
         {
             EnemyGFX.localScale = new Vector3(1f, 1f, 1f);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        score.AddScore(1);
+    }
+
+    private void OnBecameVisible()
+    {
+        rb.isKinematic = false;
     }
 }

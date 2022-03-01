@@ -15,15 +15,9 @@ public class ScoreBoard : MonoBehaviour
         ScoreBoardText.text = scoreBoardStart + scoreNumber;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void AddScore(int addedScore)
     {
-        if (collision.tag == "Diamond")
-        {
-            Debug.Log("Hit diamond");
-            scoreNumber += 10;
-            ScoreBoardText.text = scoreBoardStart + scoreNumber;
-            heroController.extraJumpsValue += 1;
-            Destroy(collision.gameObject);
-        }
+        scoreNumber += addedScore;
+        ScoreBoardText.text = scoreBoardStart + scoreNumber;
     }
 }

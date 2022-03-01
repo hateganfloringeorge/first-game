@@ -1,5 +1,6 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class HeroController : MonoBehaviour
 {
@@ -21,10 +22,15 @@ public class HeroController : MonoBehaviour
     private int extraJumps;
     public int extraJumpsValue;
 
+    ScoreBoard score;
+    public float maxHealth = 100f;
+    public float currentHealth;
+    private bool isAlive;
+
+
     private void Awake()
     {
         GameStateManager.GetInstance.OnGameStateChanged += OnGameStateChanged;
-
     }
 
     private void OnDestroy()
@@ -34,62 +40,71 @@ public class HeroController : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
+        isAlive = true;
         extraJumps = extraJumpsValue;
         rb = GetComponent<Rigidbody2D>();
+        score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
     }
 
     private void FixedUpdate()
     {
-        bool wasGrounded = isGrounded;
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-
-        if (!wasGrounded && isGrounded)
+        if (isAlive)
         {
-            OnLanding();
-        }
+            bool wasGrounded = isGrounded;
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
-        moveInput = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+            if (!wasGrounded && isGrounded)
+            {
+                OnLanding();
+            }
 
-        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+            moveInput = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            animator.SetBool("IsJumping", true);
-        }
+            animator.SetFloat("Speed", Mathf.Abs(moveInput));
 
-        if (facingRight == false && moveInput > 0)
-        {
-            Flip();
-        }
-        else if (facingRight == true && moveInput < 0)
-        {
-            Flip();
+            if (Input.GetButtonDown("Jump"))
+            {
+                animator.SetBool("IsJumping", true);
+            }
+
+            if (facingRight == false && moveInput > 0)
+            {
+                Flip();
+            }
+            else if (facingRight == true && moveInput < 0)
+            {
+                Flip();
+            }
         }
     }
 
     private void Update()
     {
-        if (isGrounded)
-        {
-            extraJumps = extraJumpsValue;
-        }
-
-        if (Input.GetButtonDown("Jump"))
+        if (isAlive)
         {
             if (isGrounded)
             {
-                rb.velocity = Vector2.up * jumpForce;
-                extraJumps--;
-                animator.SetBool("IsJumping", true);
+                extraJumps = extraJumpsValue;
             }
-            else
+
+            if (Input.GetButtonDown("Jump"))
             {
-                if (extraJumps > 0)
+                if (isGrounded)
                 {
-                    rb.velocity = Vector2.up * (jumpForce / 2f);
+                    rb.velocity = Vector2.up * jumpForce;
                     extraJumps--;
-                    animator.SetTrigger("DoubleJump");
+                    animator.SetBool("IsJumping", true);
+                }
+                else
+                {
+                    if (extraJumps > 0)
+                    {
+                        rb.velocity = Vector2.up * (jumpForce / 2f);
+                        extraJumps--;
+                        animator.SetTrigger("DoubleJump");
+                    }
                 }
             }
         }
@@ -107,8 +122,50 @@ public class HeroController : MonoBehaviour
         Time.timeScale = newGameState == GameState.Gameplay ? 1f : 0f;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Diamond")
+        {
+            Debug.Log("Hit diamond");
+            score.AddScore(10);
+            extraJumpsValue += 1;
+            Destroy(collision.gameObject);
+        }
+    }
+
     public void OnLanding()
     {
         animator.SetBool("IsJumping", false);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            Debug.Log("Got hit!");
+            DoDamage(50f);
+        }
+    }
+
+    private void DoDamage(float damageTaken)
+    {
+        currentHealth -= damageTaken;
+        if (currentHealth > 0f)
+        {
+            animator.SetTrigger("DamageTaken");
+        }
+        else
+        {
+            StartCoroutine(Die());
+        }
+    }
+
+    private IEnumerator Die()
+    {
+        Debug.Log("Dead");
+        isAlive = false;
+        animator.SetTrigger("Death");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Level_1");
     }
 }

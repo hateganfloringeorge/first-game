@@ -25,6 +25,19 @@ public class Bullet : MonoBehaviour
             enemy.TakeDamage(damage);
         }
 
+        EnemyAI enemyAI = hitInfo.GetComponent<EnemyAI>();
+        if (enemyAI != null)
+        {
+            enemyAI.TakeDamage(damage);
+        }
+
+        MonsterSpawner curse = hitInfo.GetComponent<MonsterSpawner>();
+        if (curse != null)
+        {
+            Debug.Log("Curse");
+            curse.StartCurse();
+        }
+
         Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(gameObject);
     }

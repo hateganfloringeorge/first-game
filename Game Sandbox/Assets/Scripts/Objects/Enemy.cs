@@ -4,6 +4,12 @@ public class Enemy : MonoBehaviour
 {
     public int health = 100;
     public GameObject deathEffect;
+    ScoreBoard score;
+
+    private void Start()
+    {
+        score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
+    }
 
     public void TakeDamage(int damage)
     {
@@ -17,6 +23,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        score.AddScore(-5);
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
