@@ -6844,6 +6844,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1789309080}
   bulletPrefab: {fileID: 6982679392906725264, guid: 9383c72eadc9f6240baa9c4b529c16c9, type: 3}
+  specialBulletPrefab: {fileID: 3828916862131236077, guid: 8d1213e4ed205f1478500b29c825f7e3, type: 3}
+  triggerCount: 4
+  shootingCooldown: 5
 --- !u!1 &1714023292
 GameObject:
   m_ObjectHideFlags: 0
@@ -10612,7 +10615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7212712378913298100, guid: 3756c033eb3c02a459fce3768f9c7d86, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7212712378913298101, guid: 3756c033eb3c02a459fce3768f9c7d86, type: 3}
       propertyPath: m_RootOrder

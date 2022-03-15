@@ -1,23 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
+    public GameObject specialBulletPrefab;
+
+    public int triggerCount = 4;
+    public float shootingCooldown = 5.0f;
+    private int bulletCount;
+    private bool isShootingCooldown;
+
+    private void Start()
+    {
+        bulletCount = 0;
+        isShootingCooldown = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            if (!isShootingCooldown)
+            {
+                bulletCount += 1;
+                Debug.Log(bulletCount);
+                if (bulletCount == triggerCount)
+                {
+                    isShootingCooldown = true;
+                    ShotSpecialBullet();
+                    bulletCount = 0;
+                    Invoke("EnableShooting", shootingCooldown);
+                }
+                else
+                {
+                    ShootNormalBullet();
+                }
+            }
         }
     }
 
-    void Shoot()
+    void ShootNormalBullet()
     {
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+    }
+
+    void ShotSpecialBullet()
+    {
+        //TODO update code to use interface and inheritance and customize attack
+        Instantiate(specialBulletPrefab, firePoint.position, firePoint.rotation);
+    }
+
+    private void EnableShooting()
+    {
+        isShootingCooldown = false;
     }
 }
