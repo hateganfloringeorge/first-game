@@ -1,7 +1,7 @@
 using Pathfinding;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : Enemy
 {
     public Transform target;
     public float speed = 200f;
@@ -9,16 +9,20 @@ public class EnemyAI : MonoBehaviour
 
     Path path;
     int currentWayPoint = 0;
-    bool reachedEndOfPath = false;
 
-    ScoreBoard score;
     public Transform EnemyGFX;
 
     Seeker seeker;
     Rigidbody2D rb;
 
+    public EnemyAI()
+    {
+        health = 60;
+        killScore = 10;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    private new void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -49,12 +53,7 @@ public class EnemyAI : MonoBehaviour
 
         if (currentWayPoint >= path.vectorPath.Count)
         {
-            reachedEndOfPath = true;
             return;
-        }
-        else
-        {
-            reachedEndOfPath = false;
         }
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
@@ -79,13 +78,25 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
-    {
-        score.AddScore(1);
-    }
-
     private void OnBecameVisible()
     {
         rb.isKinematic = false;
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public override void Die()
+    {
+        score.AddScore(killScore);
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

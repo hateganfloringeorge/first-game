@@ -322,7 +322,6 @@ GameObject:
   - component: {fileID: 214268146}
   - component: {fileID: 214268145}
   - component: {fileID: 214268144}
-  - component: {fileID: 214268149}
   m_Layer: 0
   m_Name: CursedFrog
   m_TagString: Untagged
@@ -353,11 +352,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 214268142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd6ffdb803bfcd94bb26d3ebf9e3f870, type: 3}
+  m_Script: {fileID: 11500000, guid: f535021afdaff104dacec6e7800cb915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  killScore: 0
+  health: 0
   deathEffect: {fileID: 8080324944431512280, guid: f0b20fc150bf9f148927cc810e5007f0, type: 3}
+  scoreDecreaseAmount: 100
+  enemy: {fileID: 1654543739}
 --- !u!61 &214268145
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -475,19 +477,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &214268149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214268142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbff945cf97d91d468b048b226c1cce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 2002721753}
 --- !u!1 &223777116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6216,10 +6205,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1410557256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd6ffdb803bfcd94bb26d3ebf9e3f870, type: 3}
+  m_Script: {fileID: 11500000, guid: fa84475d7e91c9943b3358f100f93181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  killScore: 3
+  health: 20
   deathEffect: {fileID: 8080324944431512280, guid: f0b20fc150bf9f148927cc810e5007f0, type: 3}
 --- !u!1 &1415877495
 GameObject:
@@ -6674,8 +6664,8 @@ GameObject:
   - component: {fileID: 1654543741}
   - component: {fileID: 1654543744}
   - component: {fileID: 1654543740}
-  - component: {fileID: 1654543745}
   - component: {fileID: 1654543746}
+  - component: {fileID: 1654543745}
   m_Layer: 0
   m_Name: FrogHero
   m_TagString: Untagged
@@ -6815,15 +6805,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654543739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6da5f28e10565242860da8e27f74723, type: 3}
+  m_Script: {fileID: 11500000, guid: 258d64e316159124a8465580aad79fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1654543741}
-  speed: 11
+  speed: 15
   jumpForce: 15
   wasGrounded: 0
   groundCheck: {fileID: 1925961114}
-  checkRadius: 0.5
+  checkRadius: 0.1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 16384
@@ -6839,7 +6829,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654543739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7e4b38bffcac44cbccd090782105de, type: 3}
+  m_Script: {fileID: 11500000, guid: 49445a630015b2649bd60f19771a4f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1789309080}
@@ -10029,7 +10019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScoreBoardText: {fileID: 931771382}
-  heroController: {fileID: 1654543745}
+  heroController: {fileID: 0}
 --- !u!4 &1817734320
 Transform:
   m_ObjectHideFlags: 0
@@ -10372,11 +10362,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &2002721753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6732758893823284005, guid: f62c1eb464dc4f74bba9894d598c491c, type: 3}
-  m_PrefabInstance: {fileID: 8136427517200923428}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2035976830
 GameObject:
   m_ObjectHideFlags: 0

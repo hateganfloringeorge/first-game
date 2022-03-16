@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3828916862131236067}
   - component: {fileID: 3828916862131236076}
   - component: {fileID: 3828916862131236065}
-  - component: {fileID: 3828916862131236071}
   - component: {fileID: 1868721848959507962}
+  - component: {fileID: 8100294633170304904}
   m_Layer: 0
   m_Name: WaveForm
   m_TagString: Untagged
@@ -126,22 +126,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &3828916862131236071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3828916862131236077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bd208a564d461642aece073bb801490, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 20
-  damage: 100
-  rb: {fileID: 3828916862131236065}
-  impactEffect: {fileID: 8673250373921315450, guid: 15b611f66fde07144b7d65a4fa878549, type: 3}
 --- !u!58 &1868721848959507962
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -158,3 +142,19 @@ CircleCollider2D:
   m_Offset: {x: 0.3175596, y: 0}
   serializedVersion: 2
   m_Radius: 0.0674409
+--- !u!114 &8100294633170304904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828916862131236077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d4d383d3d5b0c34db8b60a7c814b263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 40
+  damage: 10
+  rb: {fileID: 3828916862131236065}
+  impactEffect: {fileID: 8673250373921315450, guid: 15b611f66fde07144b7d65a4fa878549, type: 3}

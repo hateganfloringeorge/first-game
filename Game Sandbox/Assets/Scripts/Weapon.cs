@@ -48,7 +48,6 @@ public class Weapon : MonoBehaviour
 
     void ShotSpecialBullet()
     {
-        //TODO update code to use interface and inheritance and customize attack
         Instantiate(specialBulletPrefab, firePoint.position, firePoint.rotation);
     }
 
