@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEditor;
 
-[CustomEditor(typeof(VariableJoystick))]
+[CustomEditor(typeof(VariableJoystickEditor))]
 public class VariableJoystickEditor : JoystickEditor
 {
     private SerializedProperty moveThreshold;

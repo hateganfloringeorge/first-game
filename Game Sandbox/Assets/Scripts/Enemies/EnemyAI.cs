@@ -15,12 +15,6 @@ public class EnemyAI : Enemy
     Seeker seeker;
     Rigidbody2D rb;
 
-    public EnemyAI()
-    {
-        health = 60;
-        killScore = 10;
-    }
-
     // Start is called before the first frame update
     private new void Start()
     {
@@ -85,8 +79,12 @@ public class EnemyAI : Enemy
 
     public override void TakeDamage(int damage)
     {
-        health -= damage;
-
+        if (damage > 10)
+        {
+            health -= damage;
+        }
+        Debug.Log(health);
+        Debug.Log(damage);
         if (health <= 0)
         {
             Die();

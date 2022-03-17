@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
             if (!isShootingCooldown)
             {
                 bulletCount += 1;
-                Debug.Log(bulletCount);
+
                 if (bulletCount == triggerCount)
                 {
                     isShootingCooldown = true;

@@ -10663,6 +10663,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1654543743}
+    - target: {fileID: 2002721756, guid: f62c1eb464dc4f74bba9894d598c491c, type: 3}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 8080324944431512280, guid: f0b20fc150bf9f148927cc810e5007f0, type: 3}
     - target: {fileID: 6732758893823284005, guid: f62c1eb464dc4f74bba9894d598c491c, type: 3}
       propertyPath: m_Name
       value: Octopus

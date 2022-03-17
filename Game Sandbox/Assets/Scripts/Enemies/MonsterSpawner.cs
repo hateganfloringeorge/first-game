@@ -14,11 +14,13 @@ public class MonsterSpawner : Enemy
 
     public override void TakeDamage(int damage)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Start curse");
+        StartCurse();
     }
 
     public override void Die()
     {
+        //TODO add destroy if needed
         throw new System.NotImplementedException();
     }
 }
