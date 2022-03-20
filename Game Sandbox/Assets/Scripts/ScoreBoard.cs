@@ -4,7 +4,7 @@ using TMPro;
 public class ScoreBoard : MonoBehaviour
 {
     public TextMeshProUGUI ScoreBoardText;
-    private int scoreNumber;
+    public int scoreNumber;
     private const string scoreBoardStart = "Score: ";
     public HeroController heroController;
 

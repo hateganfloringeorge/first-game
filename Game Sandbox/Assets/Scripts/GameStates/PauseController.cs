@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PauseController : MonoBehaviour
 {
+    public GameObject finishedLevel;
+    public bool isScreenActive = false;
     // Update is called once per frame
     void Update()
     {
@@ -13,6 +15,12 @@ public class PauseController : MonoBehaviour
                 : GameState.Gameplay;
 
             GameStateManager.GetInstance.SetState(newGameState);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            isScreenActive = !isScreenActive;
+            finishedLevel.SetActive(isScreenActive);
         }
     }
 }
