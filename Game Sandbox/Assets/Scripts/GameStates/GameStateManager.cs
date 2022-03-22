@@ -34,7 +34,6 @@ public class GameStateManager
         CurrentGameState = newGameState;
         OnGameStateChanged?.Invoke(newGameState);
         Debug.Log("New state " + CurrentGameState);
-        Debug.Log("Time movement " + Time.timeScale);
     }
 }
 

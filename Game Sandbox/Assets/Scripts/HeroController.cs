@@ -118,13 +118,13 @@ public class HeroController : MonoBehaviour
 
     private void OnGameStateChanged(GameState newGameState)
     {
-        enabled = newGameState == GameState.Gameplay;
+        //enabled = newGameState == GameState.Gameplay;
         Time.timeScale = newGameState == GameState.Gameplay ? 1f : 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Diamond")
+        if (collision.CompareTag("Diamond"))
         {
             Debug.Log("Hit diamond");
             score.AddScore(10);
@@ -166,6 +166,6 @@ public class HeroController : MonoBehaviour
         isAlive = false;
         animator.SetTrigger("Death");
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("Level_1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

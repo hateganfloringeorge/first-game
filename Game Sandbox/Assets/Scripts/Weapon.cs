@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour
                     isShootingCooldown = true;
                     ShotSpecialBullet();
                     bulletCount = 0;
-                    Invoke("EnableShooting", shootingCooldown);
+                    Invoke(nameof(EnableShooting), shootingCooldown);
                 }
                 else
                 {
