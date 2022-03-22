@@ -14,6 +14,7 @@ public class EnemyAI : Enemy
 
     Seeker seeker;
     Rigidbody2D rb;
+    public HealthBar healthBar;
 
     // Start is called before the first frame update
     private new void Start()
@@ -21,8 +22,10 @@ public class EnemyAI : Enemy
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         score = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreBoard>();
+        healthBar.SetHealth(currentHealth, maxHealth);
 
         InvokeRepeating("UpdatePath", 0f, .5f);
+
     }
 
     void UpdatePath()
@@ -51,7 +54,7 @@ public class EnemyAI : Enemy
         }
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
+        Vector2 force = speed * Time.deltaTime * direction;
 
         rb.AddForce(force);
 
@@ -81,11 +84,11 @@ public class EnemyAI : Enemy
     {
         if (damage > 10)
         {
-            health -= damage;
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth, maxHealth);
         }
-        Debug.Log(health);
-        Debug.Log(damage);
-        if (health <= 0)
+
+        if (currentHealth <= 0)
         {
             Die();
         }

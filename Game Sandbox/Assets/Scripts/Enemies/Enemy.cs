@@ -4,7 +4,8 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour, IEnemy
 {
     public int killScore;
-    public int health;
+    public int maxHealth;
+    public int currentHealth;
     public GameObject deathEffect;
     public static ScoreBoard score;
 

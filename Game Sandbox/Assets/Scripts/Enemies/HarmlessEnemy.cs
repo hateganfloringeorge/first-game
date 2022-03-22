@@ -4,12 +4,19 @@ namespace Assets.Scripts.Enemies
 {
     public class HarmlessEnemy : Enemy
     {
+        public HealthBar healthBar;
+
+        private void Start()
+        {
+            healthBar.SetHealth(currentHealth, maxHealth);
+        }
 
         public override void TakeDamage(int damage)
         {
-            health -= damage;
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth, maxHealth);
 
-            if (health <= 0)
+            if (currentHealth <= 0)
             {
                 Die();
             }

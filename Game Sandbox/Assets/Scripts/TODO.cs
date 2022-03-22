@@ -6,7 +6,6 @@ public class TODO : ScriptableObject
 {
     // Add all the building blocks for level transitions
     /*
-     * Add a type of healtbar
      * Look into progress saving, would be nice to have
      * Fix bug where floor is not level
      */
